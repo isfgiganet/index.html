@@ -22,6 +22,7 @@ const $=s=>document.querySelector(s),FA='۰۱۲۳۴۵۶۷۸۹',pad=n=>String(n).
 const en=s=>String(s??'').replace(/[۰-۹]/g,d=>FA.indexOf(d)).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 const num=s=>+en(s).replace(/[,٬\s]/g,'').replace('٫','.'),nf=n=>Math.round(n||0).toLocaleString('fa-IR'),fd=s=>String(s).replace(/\d/g,d=>FA[d]);
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const VER={v:'1.1.8',r:21,d:'2026-10-05'},ED=window.EDITION||null;
 function g2j(gy,gm,gd){const g=[0,31,59,90,120,151,181,212,243,273,304,334],y2=gm>2?gy+1:gy;let d=355666+365*gy+Math.floor((y2+3)/4)-Math.floor((y2+99)/100)+Math.floor((y2+399)/400)+gd+g[gm-1],jy=-1595+33*Math.floor(d/12053);d%=12053;jy+=4*Math.floor(d/1461);d%=1461;if(d>365){jy+=Math.floor((d-1)/365);d=(d-1)%365}return[jy,d<186?1+Math.floor(d/31):7+Math.floor((d-186)/30),1+(d<186?d%31:(d-186)%30)]}
 function j2g(jy,jm,jd){jy+=1595;let d=-355668+365*jy+Math.floor(jy/33)*8+Math.floor(((jy%33)+3)/4)+jd+(jm<7?(jm-1)*31:(jm-7)*30+186),gy=400*Math.floor(d/146097);d%=146097;if(d>36524){gy+=100*Math.floor(--d/36524);d%=36524;if(d>=365)d++}gy+=4*Math.floor(d/1461);d%=1461;if(d>365){gy+=Math.floor((d-1)/365);d=(d-1)%365}let gd=d+1;const s=[0,31,(gy%4==0&&gy%100!=0)||gy%400==0?29:28,31,30,31,30,31,31,30,31,30,31];let gm;for(gm=0;gm<13&&gd>s[gm];gm++)gd-=s[gm];return[gy,gm,gd]}
 const iso=g=>g[0]+'-'+pad(g[1])+'-'+pad(g[2]),today=()=>{const d=new Date();return iso([d.getFullYear(),d.getMonth()+1,d.getDate()])};
@@ -693,7 +694,7 @@ async function bioEnable(){if(!await bioAvail()){alert('اثر انگشت یا �
 const bioOff=()=>{try{localStorage.bio='0'}catch(e){}render()};
 async function bioLogin(){if(await bioCheck(false)){S.locked=false;S.lmsg='';profileRequired('menu')}else{S.lmsg='تأیید اثر انگشت انجام نشد؛ با رمز وارد شوید';render()}}
 async function changePw(){const a=authGet();if(!a)return;{const vr=await verifyPassword(prompt('رمز فعلی')||'',a.s,a.h);if(!vr.ok)return alert('رمز فعلی درست نیست');}const n=prompt('رمز جدید (حداقل ۱۲ نویسه)')||'';if(!strongPw(n))return alert('رمز جدید باید حداقل ۱۲ نویسه باشد');a.s=rnd(16);a.h=await hashPw(n,a.s,600000);authSet(a);alert('رمز تغییر کرد')}
-/* ---------- Links page, widgets, bots ---------- */
+/* ---------- Links page and widgets ---------- */
 const PLAT=[['instagram','اینستاگرام','📷',/instagram\.com/],['youtube','یوتیوب','▶️',/youtube\.com|youtu\.be/],['threads','تردز','🧵',/threads\.net/],['x','ایکس','✖️',/(^|\/\/|\.)x\.com|twitter\.com/],['telegram','تلگرام','✈️',/t\.me|telegram\./],['whatsapp','واتساپ','💬',/wa\.me|whatsapp\./],['eitaa','ایتا','🟠',/eitaa\./],['bale','بله','🔷',/ble\.ir|bale\./],['web','وب‌سایت','🌐',/./]];
 const platOf=u=>PLAT.find(p=>p[3].test(u)),getLinks=()=>AB().links||[],setLinks=a=>{const o=AB();o.links=a;abSave(o)};
 function openLink(i){const l=getLinks()[i];if(!l)return;let u=l.u;if(!/^https?:\/\//.test(u))u='https://'+u;if(CAP&&Capacitor.Plugins.Browser)Capacitor.Plugins.Browser.open({url:u});else window.open&&openSafe(u)}
