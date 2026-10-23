@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "updatedAt": null,
+  "sources": [
+    "https://1car.ir/price",
+    "https://vinifo.ir/market",
+    "https://nerkhehrooz.com/cars"
+  ],
+  "cars": {}
+}
