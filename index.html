@@ -1441,7 +1441,7 @@ async function googleLocalCredential(resp,cid,nonce){try{
  if(!a){const nm=String(p.name||mail.split('@')[0]).trim(),parts=nm.split(/\s+/);a={e:mail,phone:'',first_name:String(p.given_name||parts[0]||nm),last_name:String(p.family_name||(parts.slice(1).join(' '))||''),googleOnly:true}}
  // Google is the only online sign-in. No local password or PIN is requested.
  a.googleOnly=true;
- a.googleSub=p.sub;a.googleEmail=mail;a.e=mail;a.googleOnly=!!a.googleOnly;a.first_name=String(a.first_name||p.given_name||p.name||'کاربر').trim();a.last_name=String(a.last_name||p.family_name||'').trim();authSet(a);const profile={first_name:a.first_name,last_name:a.last_name,phone:String(a.phone||'')};try{localStorage.profile=JSON.stringify(profile)}catch(e){}metaSet('profile',JSON.stringify(profile));S.profile=profile;S.locked=false;S.lm='login';S.lmsg='';S.admin=false;S.userId=0;authPass();touchSession();go('menu');showReleaseWelcome117();
+ a.googleSub=p.sub;a.googleEmail=mail;a.e=mail;a.googleOnly=!!a.googleOnly;a.first_name=String(a.first_name||p.given_name||p.name||'کاربر').trim();a.last_name=String(a.last_name||p.family_name||'').trim();authSet(a);const profile={first_name:a.first_name,last_name:a.last_name,phone:String(a.phone||'')};try{localStorage.profile=JSON.stringify(profile)}catch(e){}metaSet('profile',JSON.stringify(profile));S.profile=profile;S.offlineTrial=false;S.locked=false;S.lm='login';S.lmsg='';S.admin=false;S.userId=0;authPass();touchSession();go('menu');showReleaseWelcome117();
  }catch(e){S.lmsg='ورود گوگل ناموفق بود: '+(e.message||e);render()}}
 function offlineTrialStatus(){
  let x={start:0,days:30,usedToday:0,dayKey:'',expired:false,left:30};
